@@ -4,7 +4,6 @@ import (
 	"github.com/go-xorm/xorm"
 	"irisDemo/CmsProject/model"
 	"time"
-	"github.com/kataras/iris"
 )
 
 /**
@@ -44,34 +43,31 @@ func (ss *statisService) GetAdminDailyCount(date string) int64 {
 	}
 
 	endDate := startDate.AddDate(0, 0, 1)
-	iris.New().Logger().Error(startDate, "  ", endDate)
-	result, err := ss.Engine.Where(" create_time > ? and status = 0 ", startDate.Format("2006-01-02 03:04:05")).Count(new(model.Admin))
-	iris.New().Logger().Info(result, nil)
+	result, err := ss.Engine.Where(" create_time between ? and ? and status = 0 ", startDate.Format("2006-01-02 15:04:05"), endDate.Format("2006-01-02 15:04:05")).Count(model.Admin{})
 	if err != nil {
 		return 0
 	}
-	return 0
+
+	return result
 }
 
 /**
  * 查询某一日订单的单日增长数量
  */
 func (ss *statisService) GetOrderDailyCount(date string) int64 {
-	//查询如期date格式解析
+
 	startDate, err := time.Parse("2006-01-02", date)
 	if err != nil {
 		return 0
 	}
 
 	endDate := startDate.AddDate(0, 0, 1)
-	iris.New().Logger().Error(startDate, "  ", endDate)
-	///result, err := ss.Engine.Where(" register_time > ? and del_flag = 0 ", startDate.Format("2006-01-02 03:04:05")).Count(new(model.Order))
-	//iris.New().Logger().Info(result, nil)
-	//if err != nil {
-	//	return 0
-	//}
-	//return result
-	return 0
+	result, err := ss.Engine.Where(" time between ? and ? and del_flag = 0 ", startDate.Format("2006-01-02 15:04:05"), endDate.Format("2006-01-02 15:04:05")).Count(model.UserOrder{})
+	if err != nil {
+		return 0
+	}
+
+	return result
 }
 
 /**
@@ -79,19 +75,13 @@ func (ss *statisService) GetOrderDailyCount(date string) int64 {
  */
 func (ss *statisService) GetUserDailyCount(date string) int64 {
 
-	//查询日期date格式解析
 	startDate, err := time.Parse("2006-01-02", date)
 	if err != nil {
-		//如果转换时间格式失败，直接返回0
 		return 0
 	}
 
 	endDate := startDate.AddDate(0, 0, 1)
-
-	iris.New().Logger().Error(startDate, "   ", endDate)
-
-	result, err := ss.Engine.Where(" register_time > ? and del_flag = 0 ", startDate.Format("2006-01-02 03:04:05")).Count(new(model.User))
-	iris.New().Logger().Info(result, nil)
+	result, err := ss.Engine.Where(" register_time between ? and ? and del_flag = 0 ", startDate.Format("2006-01-02 15:04:05"), endDate.Format("2006-01-02 15:04:05")).Count(model.User{})
 	if err != nil {
 		return 0
 	}

@@ -26,7 +26,13 @@ func NewMysqlEngine() *xorm.Engine {
 	 * 自动警告字段的默认值，是否为空信息在模型和数据库之间不匹配的情况
 	 */
 	//Sync2是Sync的基础上优化的方法
-	err = engine.Sync2(new(model.Permission), new(model.City), new(model.Admin), new(model.AdminPermission), new(model.User))
+	err = engine.Sync2(new(
+	model.Permission),
+		new(model.City),
+		new(model.Admin),
+		new(model.AdminPermission),
+		new(model.User),
+		new(model.UserOrder))
 
 	if err != nil {
 		panic(err.Error())

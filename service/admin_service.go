@@ -51,7 +51,7 @@ func (ac *adminSevice) GetAdminCount() (int64, error) {
 func (ac *adminSevice) GetByAdminNameAndPassword(username, password string) (model.Admin, bool) {
 	var admin model.Admin
 
-	ac.engine.Where(" user_name = ? and pwd = ? ", username, password).Get(&admin)
+	ac.engine.Where(" admin_name = ? and pwd = ? ", username, password).Get(&admin)
 
 	return admin, admin.AdminId != 0
 }

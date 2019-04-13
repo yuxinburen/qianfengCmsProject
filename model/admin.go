@@ -22,7 +22,6 @@ type Admin struct {
  * 从Admin数据库实体转换为前端请求的resp的json格式
  */
 func (this *Admin) AdminToRespDesc() interface{} {
-
 	respDesc := map[string]interface{}{
 		"user_name":   this.AdminName,
 		"id":          this.AdminId,

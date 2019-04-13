@@ -75,7 +75,6 @@ func (ac *AdminController) GetCount() mvc.Result {
 			"count":  count,
 		},
 	}
-
 }
 
 /**
@@ -170,4 +169,5 @@ func (ac *AdminController) PostLogin(context iris.Context) mvc.Result {
 			"message": "管理员登录成功",
 		},
 	}
+
 }

@@ -9,6 +9,7 @@ import (
 	"irisDemo/CmsProject/datasource"
 	"github.com/kataras/iris/sessions"
 	"time"
+	"irisDemo/CmsProject/config"
 )
 
 func main() {
@@ -20,10 +21,10 @@ func main() {
 	//路由设置
 	mvcHandle(app)
 
-	//config := config.InitConfig()
-	//addr := ":" + config.Port
+	config := config.InitConfig()
+	addr := ":" + config.Port
 	app.Run(
-		iris.Addr(":9000"),                            //在端口9000进行监听
+		iris.Addr(addr),                               //在端口8080进行监听
 		iris.WithoutServerError(iris.ErrServerClosed), //无服务错误提示
 		iris.WithOptimizations,                        //对json数据序列化更快的配置
 	)
@@ -39,6 +40,7 @@ func newApp() *iris.Application {
 	//注册静态资源
 	app.StaticWeb("/static", "./static")
 	app.StaticWeb("/manage/static", "./static")
+	app.StaticWeb("/img", "./static/img")
 
 	//注册视图文件
 	app.RegisterView(iris.HTML("./static", ".html"))
